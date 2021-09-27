@@ -1,0 +1,158 @@
+<html>
+    <head>
+        <title>Test HTML stranica</title>
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./tables.css">
+    </head>
+    <body>
+
+        <h1>naslov HTML stranice</h1>
+
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, facere!</p>
+
+        <ul>
+            <li>
+                <a href="https://google.com" >prvi link - Google</a>
+            </li>
+            <li>
+                <a href="./test.html" >drugi link - interna stranica</a>
+            </li>
+            <li>
+                <a href="https://google.com" >prvi link - Google</a>
+            </li>
+            <li>
+                <a href="https://google.com" >prvi link - Google</a>
+            </li>
+            <li>
+                <a href="https://youtube.com" >novi link - Youtube</a>
+            </li>
+        </ul>
+        
+        <!-- sekcija tabela -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Grad</th>
+                    <th>Drzava</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Podgorica</td>
+                    <td>Crna Gora</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Budva</td>
+                    <td>Crna Gora</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Koala</td>
+                    <td>Crna Gora</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- druga tabela -->
+        <table id="second-table" class="yellowgreen" >
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Grad</th>
+                    <th>Drzava</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Podgorica</td>
+                    <td>Crna Gora</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Budva</td>
+                    <td>Crna Gora</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Koala</td>
+                    <td>Crna Gora</td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <!-- treca tabela -->
+        <table id="third-table" class="yellowgreen" >
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Grad</th>
+                    <th>Drzava</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Podgorica</td>
+                    <td>Crna Gora</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Budva</td>
+                    <td>Crna Gora</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Koala</td>
+                    <td>Crna Gora</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- sekcija slike -->
+        <!-- <img src="https://cdn.britannica.com/26/162626-050-3534626F/Koala.jpg" /> -->
+        <!-- <img src="./images/koala2.jpg" alt=""> -->
+
+        <hr/>
+
+        <h3>Kontakt</h3>
+        <a href="tel:067/993-311">Pozovite nas...</a>
+        <br/>
+        <a href="mailto:mail@mail.com">Pisite nam putem mail-a...</a>
+        
+        <br/>
+        <br/>
+        <form action="./send_contact.html">
+            <input type="text" name="ime" placeholder="Unesite Vase ime..." id="kontakt_input_ime" required />
+            <input type="number" name="godine" step="1" placeholder="Unesite godine..." id="kontakt_input_godine" required />
+            <input type="email" name="email" placeholder="Unesite Vasu mail adresu" id="kontakt_input_email" required >
+
+            <br/>
+            <label>Odaberite pol</label>
+            <input type="radio" name="pol" value="M" > M
+            <input type="radio" name="pol" value="Z" > Z
+            
+            <br/>
+            <br/>
+            <input type="checkbox" name="promo" id="kontakt_promo_chk" >    
+            <label for="kontakt_promo_chk" >Zelim da dobijam promo mail-ove</label>
+            
+            <br/>
+            <br/>
+            <textarea name="kontakt_txt_poruka" id="" cols="30" rows="10" required></textarea>
+
+            <br/>
+            <br/>
+            <button>Posalji poruku</button>
+        </form>
+
+        <button>Nazad / odustani</button>
+
+    </body>
+</html>

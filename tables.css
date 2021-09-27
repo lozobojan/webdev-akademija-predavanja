@@ -1,0 +1,14 @@
+table {
+    background-color : blue;
+    color: white;
+    margin: 20px;
+    padding: 15px;
+}
+
+#second-table thead:nth-child(1){
+    background-color: blue;
+}
+
+#third-table {
+    background-color : red;
+} 
