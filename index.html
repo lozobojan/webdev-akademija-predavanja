@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sedmica 5</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+</head>
+<body>
+    
+    <div class="container pt-5">
+		
+      <div class="row">
+        <div class="col-8">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Email</th>
+                <th>Detalji</th>
+              </tr>
+            </thead>
+
+            <tbody id="user_table_body">
+              <tr class="text-center">
+                <td colspan="5" >
+                  podaci se ucitavaju...
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+
+        <div class="col-4" id="single_user_details">
+
+        </div>
+
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-8">
+          <a href="#" class="float-start" onclick="fetchData(1)" id="prev_page_link">prethodna stranica</a>
+          <a href="#" class="float-end" onclick="fetchData(2, 3)" id="next_page_link">sledeća stranica</a>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+    <script src="./app.js"></script>
+</body>
+</html>
