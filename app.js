@@ -31,7 +31,7 @@ function displayUsersData(){
     document.getElementById('user_table_body').innerHTML = usersHTML.join('');
 }
 
-// fetchData(); // metod koji cita podatake i prikazuje tabelu
+fetchData(); // metod koji cita podatake i prikazuje tabelu
 
 function showSingleUser(user_id){
     let user = {};
