@@ -1,6 +1,8 @@
 <?php 
 
-    include './file_functions.php';
+    require './file_functions.php'; // throws an error
+    require './users_functions.php';
+    require './form_functions.php';
 
 ?>
 <!DOCTYPE html>
@@ -19,31 +21,64 @@
     <div class="container pt-5">
       <div class="row">
         <div class="col-8 offset-2">
-        
+
+            <?php 
+                if(isset($_GET['user_saved']) && $_GET['user_saved'] == 1)
+                    showAlertDiv("Uspješno dodavanje korisnika!", "alert-success");
+                if(isset($_GET['user_deleted']) && $_GET['user_deleted'] == 1)
+                    showAlertDiv("Uspješno brisanje korisnika!", "alert-success");
+            ?>
+
+            <div class="row">
+                <div class="col-12 text-end">
+                    <form action="./index.php" method="GET">
+                        <div class="row">
+                            <div class="col-3 offset-9">
+                                <input type="text" placeholder="Pretraga..." name="term" class="form-control" id="searchTermInput" value="<?=isset($_GET['term']) ? $_GET['term'] : ''?>" >
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Ime</th>
                         <th>Prezime</th>
                         <th>E-mail</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
 
                        $users = getUsersFromFile();
+                       if(isset($_GET['term'])){
+                           $users = filterUsers($users, strtolower($_GET['term']));
+                       }
                        
                        for($i = 0; $i < count($users); $i++){
                            echo "<tr>";
+                           echo "   <td>".$users[$i]['id']."</td>";
                            echo "   <td>".$users[$i]['first_name']."</td>";
                            echo "   <td>".$users[$i]['last_name']."</td>";
                            echo "   <td>".$users[$i]['email']."</td>";
+                           echo "   <td> <a class=\"btn btn-danger\" href=\"delete_user.php?id=".$users[$i]['id']."\" >X</a> </td>";
                            echo "</tr> \n ";
                        } 
 
                     ?>
                 </tbody>
             </table>
+            
+            <div class="row">
+                <div class="col-12 text-end">
+                    <!-- php echo shorthand -->
+                    Ukupno redova: <?=count($users)?>
+                </div>
+            </div>
 
         </div>
       </div>
@@ -66,7 +101,7 @@
 
                 <div class="row mt-3">
                     <div class="col-4 offset-4">
-                        <button class="btn btn-success">Dodaj korisnika</button>
+                        <button class="btn btn-success w-100">Dodaj korisnika</button>
                     </div>
                 </div>
             </form>
@@ -77,5 +112,10 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+    <script>
+        // document.getElementById("searchTermInput").addEventListener("keyup", () => {
+        //     console.log(document.getElementById("searchTermInput").value);
+        // });
+    </script>
 </body>
 </html>
