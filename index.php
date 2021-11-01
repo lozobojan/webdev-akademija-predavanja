@@ -17,7 +17,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 </head>
 <body>
-    
+
+    <!-- HTTP, GET (query string)/POST -->
+
     <div class="container pt-5">
       <div class="row">
         <div class="col-8 offset-2">
@@ -27,13 +29,18 @@
                     showAlertDiv("Uspješno dodavanje korisnika!", "alert-success");
                 if(isset($_GET['user_deleted']) && $_GET['user_deleted'] == 1)
                     showAlertDiv("Uspješno brisanje korisnika!", "alert-success");
+                if(isset($_GET['user_updated']) && $_GET['user_updated'] == 1)
+                    showAlertDiv("Uspješna izmjena korisnika!", "alert-success");
             ?>
 
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-12 text-end">
                     <form action="./index.php" method="GET">
                         <div class="row">
-                            <div class="col-3 offset-9">
+                            <div class="col-3 text-start">
+                                <a href="./new_user.php" class="btn btn-primary w-100">Dodaj novog korisnika</a>
+                            </div>
+                            <div class="col-3 offset-6">
                                 <input type="text" placeholder="Pretraga..." name="term" class="form-control" id="searchTermInput" value="<?=isset($_GET['term']) ? $_GET['term'] : ''?>" >
                             </div>
                         </div>
@@ -48,7 +55,8 @@
                         <th>Ime</th>
                         <th>Prezime</th>
                         <th>E-mail</th>
-                        <th></th>
+                        <th>Izmjena</th>
+                        <th>Brisanje</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,7 +73,8 @@
                            echo "   <td>".$users[$i]['first_name']."</td>";
                            echo "   <td>".$users[$i]['last_name']."</td>";
                            echo "   <td>".$users[$i]['email']."</td>";
-                           echo "   <td> <a class=\"btn btn-danger\" href=\"delete_user.php?id=".$users[$i]['id']."\" >X</a> </td>";
+                           echo "   <td> <a class=\"btn btn-primary\" href=\"edit_user.php?id=".$users[$i]['id']."\" >i</a> </td>";
+                           echo "   <td> <a class=\"btn btn-danger\" href=\"#\" onclick=\"confirmDelete(".$users[$i]['id'].")\" >X</a> </td>";
                            echo "</tr> \n ";
                        } 
 
@@ -83,39 +92,21 @@
         </div>
       </div>
 
-      <div class="row mt-5">
-          <div class="col-8 offset-2">
-            
-          <form action="./add_new_user.php" method="POST">
-                <div class="row">
-                    <div class="col-4">
-                        <input type="text" name="first_name" class="form-control" placeholder="Unesite ime">
-                    </div>
-                    <div class="col-4">
-                        <input type="text" name="last_name" class="form-control" placeholder="Unesite prezime">
-                    </div>
-                    <div class="col-4">
-                        <input type="email" name="email" class="form-control" placeholder="Unesite e-mail adresu">
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-4 offset-4">
-                        <button class="btn btn-success w-100">Dodaj korisnika</button>
-                    </div>
-                </div>
-            </form>
-
-          </div>
-      </div>
-
     </div>
-
+    
+    <?php include("confirm_delete_modal.php"); ?>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
     <script>
-        // document.getElementById("searchTermInput").addEventListener("keyup", () => {
-        //     console.log(document.getElementById("searchTermInput").value);
-        // });
-    </script>
+        
+        function confirmDelete(id){
+            var confirmModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'), {});
+            document.getElementById("deleteUserIdSpan").innerHTML = id;
+            document.getElementById("deleteButton").href = 'delete_user.php?id='+id;
+            confirmModal.show();
+        }
+
+    </script>    
+
 </body>
 </html>

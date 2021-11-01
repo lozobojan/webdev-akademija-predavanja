@@ -26,4 +26,11 @@
         }
         return $max+1;
     }
+
+    function findUserByID($users, $id){
+        foreach($users as $user){
+            if($user['id'] == $id) return $user;
+        }
+        return false;
+    }
 ?>
