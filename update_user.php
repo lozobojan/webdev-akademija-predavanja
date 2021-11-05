@@ -2,6 +2,9 @@
 
     include './file_functions.php';
     include './users_functions.php';
+    require './auth_functions.php';
+    
+    checkAuth();
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
 
@@ -12,13 +15,11 @@
 
         $users = getUsersFromFile(); // fetch from "DB"
         
-        foreach($users as $key => $user){
+        foreach($users as &$user){
             if($user['id'] == $id){
                 $user['first_name'] = $first_name;
                 $user['last_name'] = $last_name;
                 $user['email'] = $email;
-
-                $users[$key] = $user;
             }
         }
         

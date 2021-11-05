@@ -3,7 +3,9 @@
     require './file_functions.php'; // throws an error
     require './users_functions.php';
     require './form_functions.php';
-
+    require './auth_functions.php';
+    
+    checkAuth();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +33,8 @@
                     showAlertDiv("Uspješno brisanje korisnika!", "alert-success");
                 if(isset($_GET['user_updated']) && $_GET['user_updated'] == 1)
                     showAlertDiv("Uspješna izmjena korisnika!", "alert-success");
+                if(isset($_GET['logged_in']) && $_GET['logged_in'] == 1)
+                    showAlertDiv("Dobrodošli!", "alert-success");
             ?>
 
             <div class="row mb-3">
@@ -38,7 +42,7 @@
                     <form action="./index.php" method="GET">
                         <div class="row">
                             <div class="col-3 text-start">
-                                <a href="./new_user.php" class="btn btn-primary w-100">Dodaj novog korisnika</a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#newUserModal" class="btn btn-primary w-100">Dodaj novog korisnika</a>
                             </div>
                             <div class="col-3 offset-6">
                                 <input type="text" placeholder="Pretraga..." name="term" class="form-control" id="searchTermInput" value="<?=isset($_GET['term']) ? $_GET['term'] : ''?>" >
@@ -73,7 +77,7 @@
                            echo "   <td>".$users[$i]['first_name']."</td>";
                            echo "   <td>".$users[$i]['last_name']."</td>";
                            echo "   <td>".$users[$i]['email']."</td>";
-                           echo "   <td> <a class=\"btn btn-primary\" href=\"edit_user.php?id=".$users[$i]['id']."\" >i</a> </td>";
+                           echo "   <td> <a class=\"btn btn-primary\" href=\"#\" onclick=\"showEditModal(".$users[$i]['id'].")\" >i</a> </td>";
                            echo "   <td> <a class=\"btn btn-danger\" href=\"#\" onclick=\"confirmDelete(".$users[$i]['id'].")\" >X</a> </td>";
                            echo "</tr> \n ";
                        } 
@@ -94,7 +98,9 @@
 
     </div>
     
-    <?php include("confirm_delete_modal.php"); ?>
+    <?php include("./modals/confirm_delete_modal.php"); ?>
+    <?php include("./modals/new_user_modal.php"); ?>
+    <?php include("./modals/edit_user_modal.php"); ?>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
     <script>
@@ -104,6 +110,21 @@
             document.getElementById("deleteUserIdSpan").innerHTML = id;
             document.getElementById("deleteButton").href = 'delete_user.php?id='+id;
             confirmModal.show();
+        }
+
+        function showEditModal(id){
+            var editModal = new bootstrap.Modal(document.getElementById('editUserModal'), {});
+            fetch("http://localhost/uvod-php/api/user.php?id="+id)
+                .then((response) => response.json())
+                .then((responseJSON) => {
+                    if(responseJSON.status == true){
+                        let userData = responseJSON.data;
+                        document.getElementById("editModalFirstName").value = userData.first_name;
+                        document.getElementById("editModalLastName").value = userData.last_name;
+                        document.getElementById("editModalEmail").value = userData.email;
+                    }
+                })
+            editModal.show();
         }
 
     </script>    

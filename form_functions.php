@@ -1,9 +1,9 @@
 <?php 
 
-    function showAlertDiv($message, $class){
+    function showAlertDiv($message, $class, $colClass = "col-12"){
         echo "
             <div class=\"row\">
-                <div class=\"col-12 alert $class text-center\">
+                <div class=\"$colClass alert $class text-center\">
                     $message
                 </div>
             </div>

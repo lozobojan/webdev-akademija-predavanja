@@ -33,4 +33,11 @@
         }
         return false;
     }
+
+    function findUserByEmailAndPassword($users, $email, $password){
+        foreach($users as $user){
+            if($user['email'] == $email && $user['password'] == md5($password)) return $user;
+        }
+        return false;
+    }
 ?>

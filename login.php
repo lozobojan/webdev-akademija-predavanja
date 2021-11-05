@@ -3,10 +3,7 @@
     require './file_functions.php'; // throws an error
     require './users_functions.php';
     require './form_functions.php';
-    require './auth_functions.php';
     
-    checkAuth();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,30 +21,32 @@
     <div class="container pt-5">
       
       <div class="row">
-          <div class="col-10 offset-1">
+          <div class="col-8 offset-2">
         
-          <h2 class="text-center mt-3 mb-3">Dodavanje novog korisnika</h2>
+          <h2 class="text-center mt-3 mb-3">Prijava</h2>
           <hr>
 
-          <form action="./add_new_user.php" method="POST">
+          <form action="./check_login.php" method="POST">
                 <div class="row">
-                    <div class="col-3">
-                        <input type="text" name="first_name" class="form-control" placeholder="Unesite ime">
-                    </div>
-                    <div class="col-3">
-                        <input type="text" name="last_name" class="form-control" placeholder="Unesite prezime">
-                    </div>
-                    <div class="col-3">
+                    <div class="col-6 offset-3">
                         <input type="email" name="email" class="form-control" placeholder="Unesite e-mail adresu">
-                    </div>
-                    <div class="col-3">
-                        <input type="password" name="password" class="form-control" placeholder="Unesite lozinku">
                     </div>
                 </div>
 
                 <div class="row mt-3">
+                    <div class="col-6 offset-3">
+                        <input type="password" name="password" class="form-control" placeholder="Unesite lozinku">
+                    </div>
+                </div>
+
+                <?php 
+                    if(isset($_GET['wrong_credentials']) && $_GET['wrong_credentials'] == 1)
+                        showAlertDiv("Pogresno korisničko ime/lozinka", "alert-danger mt-3", "col-6 offset-3");
+                ?>
+
+                <div class="row mt-3">
                     <div class="col-4 offset-4">
-                        <button class="btn btn-success w-100">Dodaj korisnika</button>
+                        <button class="btn btn-success w-100">Prijava</button>
                     </div>
                 </div>
             </form>

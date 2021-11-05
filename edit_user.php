@@ -3,6 +3,9 @@
     require './file_functions.php'; // throws an error
     require './users_functions.php';
     require './form_functions.php';
+    require './auth_functions.php';
+    
+    checkAuth();
 
     $user = findUserByID(getUsersFromFile(), $_GET['id']);
     if(!$user){
