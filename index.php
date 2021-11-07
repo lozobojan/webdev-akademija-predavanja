@@ -112,18 +112,29 @@
             confirmModal.show();
         }
 
-        function showEditModal(id){
+        async function showEditModal(id){
             var editModal = new bootstrap.Modal(document.getElementById('editUserModal'), {});
-            fetch("http://localhost/uvod-php/api/user.php?id="+id)
-                .then((response) => response.json())
-                .then((responseJSON) => {
-                    if(responseJSON.status == true){
-                        let userData = responseJSON.data;
-                        document.getElementById("editModalFirstName").value = userData.first_name;
-                        document.getElementById("editModalLastName").value = userData.last_name;
-                        document.getElementById("editModalEmail").value = userData.email;
-                    }
-                })
+
+            // Promise + callback verzija
+            // fetch("http://localhost/uvod-php/api/user.php?id="+id)
+            //     .then((response) => response.json())
+            //     .then((responseJSON) => {
+            //         if(responseJSON.status == true){
+            //             let userData = responseJSON.data;
+            //             document.getElementById("editModalFirstName").value = userData.first_name;
+            //             document.getElementById("editModalLastName").value = userData.last_name;
+            //             document.getElementById("editModalEmail").value = userData.email;
+            //         }
+            //     })
+            
+            let response = await fetch("http://localhost/uvod-php/api/user.php?id="+id);
+            let responseJSON = await response.json();
+            if(responseJSON.status == true){
+                let userData = responseJSON.data;
+                document.getElementById("editModalFirstName").value = userData.first_name;
+                document.getElementById("editModalLastName").value = userData.last_name;
+                document.getElementById("editModalEmail").value = userData.email;
+            }
             editModal.show();
         }
 
