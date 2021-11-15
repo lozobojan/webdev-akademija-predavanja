@@ -1,7 +1,6 @@
 <?php 
 
-    include './file_functions.php';
-    include './users_functions.php';
+    include './db_connect.php';
     require './auth_functions.php';
     
     checkAuth();
@@ -13,20 +12,14 @@
         $email = $_POST['email'];
         $id = $_POST['id'];
 
-        $users = getUsersFromFile(); // fetch from "DB"
+        $update_user_sql = "UPDATE users SET first_name = '$first_name', last_name = '$last_name', email = '$email' WHERE id = $id ";
+        $res_update = mysqli_query($dbconn, $update_user_sql);
         
-        foreach($users as &$user){
-            if($user['id'] == $id){
-                $user['first_name'] = $first_name;
-                $user['last_name'] = $last_name;
-                $user['email'] = $email;
-            }
-        }
-        
-        writeToFile(json_encode($users));  // save to "DB"
+        $rows = mysqli_affected_rows($dbconn);
 
         // redirect to index with message
-        header("location:index.php?user_updated=1");
+        header("location:index.php?user_updated=$rows");
+    
     }
 
     

@@ -9,6 +9,7 @@
       <div class="modal-body">
       
       <form action="./update_user.php" method="POST">
+          <input type="hidden" name="id" value="" id="editModalId">
           <div class="row">
               <div class="col-12">
                   <input type="text" name="first_name" id="editModalFirstName" class="form-control" placeholder="Unesite ime">
@@ -22,8 +23,8 @@
           </div>
 
           <div class="row mt-3">
-              <div class="col-4 offset-4">
-                  <button class="btn btn-success w-100">Dodaj korisnika</button>
+              <div class="col-6 offset-3">
+                  <button class="btn btn-success w-100">Izmijeni korisnika</button>
               </div>
           </div>
       </form>

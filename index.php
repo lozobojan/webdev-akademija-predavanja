@@ -1,6 +1,6 @@
 <?php 
 
-    require './file_functions.php'; // throws an error
+    require './db_connect.php';
     require './users_functions.php';
     require './form_functions.php';
     require './auth_functions.php';
@@ -66,19 +66,21 @@
                 <tbody>
                     <?php 
 
-                       $users = getUsersFromFile();
+                        $get_users_sql = "SELECT * FROM users";
+                        $res_users = mysqli_query($dbconn, $get_users_sql);                       
+
                        if(isset($_GET['term'])){
                            $users = filterUsers($users, strtolower($_GET['term']));
                        }
                        
-                       for($i = 0; $i < count($users); $i++){
+                       while($user = mysqli_fetch_assoc($res_users)){
                            echo "<tr>";
-                           echo "   <td>".$users[$i]['id']."</td>";
-                           echo "   <td>".$users[$i]['first_name']."</td>";
-                           echo "   <td>".$users[$i]['last_name']."</td>";
-                           echo "   <td>".$users[$i]['email']."</td>";
-                           echo "   <td> <a class=\"btn btn-primary\" href=\"#\" onclick=\"showEditModal(".$users[$i]['id'].")\" >i</a> </td>";
-                           echo "   <td> <a class=\"btn btn-danger\" href=\"#\" onclick=\"confirmDelete(".$users[$i]['id'].")\" >X</a> </td>";
+                           echo "   <td>".$user['id']."</td>";
+                           echo "   <td>".$user['first_name']."</td>";
+                           echo "   <td>".$user['last_name']."</td>";
+                           echo "   <td>".$user['email']."</td>";
+                           echo "   <td> <a class=\"btn btn-primary\" href=\"#\" onclick=\"showEditModal(".$user['id'].")\" >i</a> </td>";
+                           echo "   <td> <a class=\"btn btn-danger\" href=\"#\" onclick=\"confirmDelete(".$user['id'].")\" >X</a> </td>";
                            echo "</tr> \n ";
                        } 
 
@@ -89,7 +91,7 @@
             <div class="row">
                 <div class="col-12 text-end">
                     <!-- php echo shorthand -->
-                    Ukupno redova: <?=count($users)?>
+                    Ukupno redova: <?=mysqli_num_rows($res_users)?>
                 </div>
             </div>
 
@@ -134,9 +136,23 @@
                 document.getElementById("editModalFirstName").value = userData.first_name;
                 document.getElementById("editModalLastName").value = userData.last_name;
                 document.getElementById("editModalEmail").value = userData.email;
+                document.getElementById("editModalId").value = userData.id;
             }
             editModal.show();
         }
+
+        document.getElementById("newUserCountrySelect").addEventListener('change', async () => {
+            let country_id = document.getElementById("newUserCountrySelect").value;
+            let response = await fetch("http://localhost/uvod-php/api/cities_by_country.php?country_id="+country_id);
+            let responseJSON = await response.json();
+            
+            let usersOptions = '';
+            responseJSON.forEach((city) => {
+                usersOptions += `<option value="${city['id']}" >${city['name']}</option>`;
+            });
+
+            document.getElementById("newUserCitySelect").innerHTML = usersOptions;
+        });
 
     </script>    
 

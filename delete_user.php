@@ -1,15 +1,20 @@
 <?php 
 
-    require './users_functions.php';
-    require './file_functions.php';
+    require './db_connect.php';
     require './auth_functions.php';
     
     checkAuth();
 
-    $users = removeUser( getUsersFromFile(), $_GET['id'] );
-    writeToFile(json_encode($users));  // save to "DB"
+    $delete_user_sql = "DELETE FROM users WHERE id = ".$_GET['id'];
+    $res_delete = mysqli_query($dbconn, $delete_user_sql);
 
-    // redirect to index with message
-    header("location:index.php?user_deleted=1");
+    if($res_delete){
+        // redirect to index with message
+        header("location:index.php?user_deleted=1");
+    }else{
+        header("location:index.php?user_deleted=0");
+    }
+
+    
 
 ?>

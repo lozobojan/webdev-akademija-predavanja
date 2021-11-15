@@ -16,6 +16,30 @@
               <div class="col-12 mt-3">
                   <input type="text" name="last_name" class="form-control" placeholder="Unesite prezime">
               </div>
+
+              <div class="col-12 mt-3">
+                  <select name="country_id" class="form-control" id="newUserCountrySelect">
+                    <option value="">-odaberite državu-</option>
+                    <?php 
+
+                      $countries_sql = "SELECT * FROM countries";
+                      $countries_res = mysqli_query($dbconn, $countries_sql);
+
+                      while($country = mysqli_fetch_assoc($countries_res) ){
+                        $id_temp = $country['id'];
+                        $name_temp = $country['name'];
+                        echo "<option value=\"$id_temp\">$name_temp</option>";
+                      }
+
+                    ?>
+                  </select>
+              </div>
+
+              <div class="col-12 mt-3">
+                  <select name="city_id" class="form-control" id="newUserCitySelect"></select>
+              </div>
+              
+
               <div class="col-12 mt-3">
                   <input type="email" name="email" class="form-control" placeholder="Unesite e-mail adresu">
               </div>

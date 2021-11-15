@@ -3,7 +3,7 @@
     // superglobals
     // $_REQUEST, $_POST, $_GET, $_SERVER, $_SESSION
 
-    include './file_functions.php';
+    include './db_connect.php';
     include './users_functions.php';
     require './auth_functions.php';
     
@@ -14,16 +14,23 @@
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
         $email = $_POST['email'];
-        $password = $_POST['password'];
+        $password = md5($_POST['password']);
+        $country_id = $_POST['country_id'];
+        $city_id = $_POST['city_id'];
 
-        $users = getUsersFromFile(); // fetch from "DB"
-        $new_user = [ "id" => nextID($users) , "first_name" => $first_name, "last_name" => $last_name, "email" => $email, "password" => md5($password) ];
 
-        array_push($users, $new_user);
-        writeToFile(json_encode($users));  // save to "DB"
+        $insert_user_sql = "INSERT INTO users (first_name, last_name, email, `password`, city_id, country_id) 
+                            VALUES ('$first_name', '$last_name', '$email', '$password', $city_id, $country_id)";
 
-        // redirect to index with message
-        header("location:index.php?user_saved=1");
+        $saved = mysqli_query($dbconn, $insert_user_sql);
+
+        if($saved){
+            // redirect to index with message
+            header("location:index.php?user_saved=1");
+        }else{
+            header("location:index.php?user_saved=0");
+        }
+        
     }
 
     
