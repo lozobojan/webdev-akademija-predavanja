@@ -15,8 +15,8 @@
         $last_name = $_POST['last_name'];
         $email = $_POST['email'];
         $password = md5($_POST['password']);
-        $country_id = $_POST['country_id'];
-        $city_id = $_POST['city_id'];
+        $country_id = isset($_POST['country_id']) && $_POST['country_id'] ? $_POST['country_id'] : "null";
+        $city_id = isset($_POST['city_id']) && $_POST['city_id'] ? $_POST['city_id'] : "null";
 
 
         $insert_user_sql = "INSERT INTO users (first_name, last_name, email, `password`, city_id, country_id) 

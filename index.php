@@ -59,6 +59,8 @@
                         <th>Ime</th>
                         <th>Prezime</th>
                         <th>E-mail</th>
+                        <th>Država</th>
+                        <th>Grad</th>
                         <th>Izmjena</th>
                         <th>Brisanje</th>
                     </tr>
@@ -66,12 +68,27 @@
                 <tbody>
                     <?php 
 
-                        $get_users_sql = "SELECT * FROM users";
-                        $res_users = mysqli_query($dbconn, $get_users_sql);                       
+                        $get_users_sql = "SELECT 
+                                                users.id, 
+                                                users.first_name, 
+                                                users.last_name, 
+                                                users.email, 
+                                                COALESCE(cities.name, 'nepoznato') as city_name, 
+                                                COALESCE(countries.name, 'nepoznato') as country_name
+                                            from users
+                                            left join cities on cities.id = users.city_id
+                                            left join countries on countries.id = users.country_id
+                                        ";                      
 
                        if(isset($_GET['term'])){
-                           $users = filterUsers($users, strtolower($_GET['term']));
+                           $term = $_GET['term'];
+                           $get_users_sql = $get_users_sql . " WHERE first_name like '%$term%' OR last_name like '%$term%' 
+                                                                OR cities.name like '%$term%' OR countries.name like '%$term%'
+                                                            ";
                        }
+                       $get_users_sql .= " ORDER BY first_name ASC ";
+
+                       $res_users = mysqli_query($dbconn, $get_users_sql); 
                        
                        while($user = mysqli_fetch_assoc($res_users)){
                            echo "<tr>";
@@ -79,6 +96,8 @@
                            echo "   <td>".$user['first_name']."</td>";
                            echo "   <td>".$user['last_name']."</td>";
                            echo "   <td>".$user['email']."</td>";
+                           echo "   <td>".$user['country_name']."</td>";
+                           echo "   <td>".$user['city_name']."</td>";
                            echo "   <td> <a class=\"btn btn-primary\" href=\"#\" onclick=\"showEditModal(".$user['id'].")\" >i</a> </td>";
                            echo "   <td> <a class=\"btn btn-danger\" href=\"#\" onclick=\"confirmDelete(".$user['id'].")\" >X</a> </td>";
                            echo "</tr> \n ";
