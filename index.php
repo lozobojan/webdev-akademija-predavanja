@@ -17,8 +17,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="./style.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+
+    <?php include('navbar.php') ?>
 
     <!-- HTTP, GET (query string)/POST -->
 
@@ -55,7 +58,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>...</th>
                         <th>Ime</th>
                         <th>Prezime</th>
                         <th>E-mail</th>
@@ -74,7 +77,8 @@
                                                 users.last_name, 
                                                 users.email, 
                                                 COALESCE(cities.name, 'nepoznato') as city_name, 
-                                                COALESCE(countries.name, 'nepoznato') as country_name
+                                                COALESCE(countries.name, 'nepoznato') as country_name,
+                                                COALESCE(profile_photo, 'uploads/profile_photos/default.png') as photo
                                             from users
                                             left join cities on cities.id = users.city_id
                                             left join countries on countries.id = users.country_id
@@ -92,7 +96,7 @@
                        
                        while($user = mysqli_fetch_assoc($res_users)){
                            echo "<tr>";
-                           echo "   <td>".$user['id']."</td>";
+                           echo "   <td><img class=\"img-fluid profile-photo\" src=\"".$user['photo']."\" ></td>";
                            echo "   <td>".$user['first_name']."</td>";
                            echo "   <td>".$user['last_name']."</td>";
                            echo "   <td>".$user['email']."</td>";

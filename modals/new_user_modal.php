@@ -8,7 +8,7 @@
       </div>
       <div class="modal-body">
       
-      <form action="./add_new_user.php" method="POST">
+      <form action="./add_new_user.php" method="POST" enctype="multipart/form-data">
           <div class="row">
               <div class="col-12">
                   <input type="text" name="first_name" class="form-control" placeholder="Unesite ime">
@@ -39,6 +39,9 @@
                   <select name="city_id" class="form-control" id="newUserCitySelect"></select>
               </div>
               
+              <div class="col-12 mt-3">
+                  <input type="file" name="profile_photo" class="form-control">
+              </div>
 
               <div class="col-12 mt-3">
                   <input type="email" name="email" class="form-control" placeholder="Unesite e-mail adresu">
